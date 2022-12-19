@@ -53,11 +53,11 @@ class Main():
                             sqSelected = ()
                             auxMover = []
 
-                        if self.board.getPiece(sqSelected)[0] == "w" and  self.board.whiteToMove == False:
+                        elif self.board.getPiece(sqSelected)[0] == "w" and  self.board.whiteToMove == False:
                             sqSelected = ()
                             auxMover = []
 
-                        if self.board.getPiece(sqSelected)[0] == "b" and  self.board.whiteToMove == True:
+                        elif self.board.getPiece(sqSelected)[0] == "b" and  self.board.whiteToMove == True:
                             sqSelected = ()
                             auxMover = []
 
@@ -66,7 +66,7 @@ class Main():
                         validMoves = self.board.getPossibleMoves(sqSelected)     #Consigue todos los posibles movimientos
 
                         for move in validMoves:
-                            print("Possible moves dsps: " + move.MoveNotation())
+                            print("Possible moves: " + move.MoveNotation())
 
                     if len(auxMover) == 2:   #Two valid clicks -> move
                         move = mover(auxMover[0], auxMover[1], self.board.boardcoord)

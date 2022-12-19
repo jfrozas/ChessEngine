@@ -57,27 +57,148 @@ class Board:
         if piece == "wp" or piece == "bp":
             self.getPawnMoves(self.row, self.column, moves)
 
+        if piece == "wR" or piece == "bR":
+            self.getRookMoves(self.row, self.column, moves)
+
         return moves
         #print(self.boardcoord[self.row][self.column][0] + self.boardcoord[self.row][self.column][1]) 
 
 
 
     def getPawnMoves(self, row, column, moves):
-        if self.whiteToMove:  #White
+
+        if self.whiteToMove:                                                                         #White
             if self.boardcoord[row-1][column] == "__":
-                moves.append( mover( (row, column), (row-1, column), self.boardcoord) )
+                moves.append( mover( (row, column), (row-1, column), self.boardcoord) )             #Move 1
                 if row == 6 and self.boardcoord[row-2][column] == "__":
-                    moves.append( mover( (row, column), (row-2, column), self.boardcoord) )
+                    moves.append( mover( (row, column), (row-2, column), self.boardcoord) )          #Move 2 
+
+            if column-1 >= 0:                                                                       #Captures  
+                if self.boardcoord[row-1][column-1][0] == "b":          
+                    moves.append( mover( (row, column), (row-1, column-1), self.boardcoord) )       #Captures left
+            if column+1 <= 7:
+                if self.boardcoord[row-1][column+1][0] == "b":                              
+                    moves.append( mover( (row, column), (row-1, column+1), self.boardcoord) )       #Captures right
+
         else:
             if self.boardcoord[row+1][column] == "__":
                 moves.append( mover( (row, column), (row+1, column), self.boardcoord) )
                 if row == 1 and self.boardcoord[row+2][column] == "__":
                     moves.append( mover( (row, column), (row+2, column), self.boardcoord) )
 
-    
+            if column-1 >= 0:                                                                       #Captures  
+                if self.boardcoord[row+1][column-1][0] == "w":          
+                    moves.append( mover( (row, column), (row+1, column-1), self.boardcoord) )       #Captures left
+            if column+1 <= 7:
+                if self.boardcoord[row+1][column+1][0] == "w":                              
+                    moves.append( mover( (row, column), (row+1, column+1), self.boardcoord) )       #Captures right
     
 
 
+
+    def getRookMoves(self, row, column, moves):
+        
+        if self.whiteToMove == True:
+            enemycolor = "b"
+        else:
+            enemycolor = "w"
+
+        #Up
+        a = -1
+        b = 0
+
+        for i in range(1,8):
+
+            endRow = row + a * i
+            endCol = column + b * i
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                    break
+
+                else:
+                    break
+
+            else:
+                break
+        #Down
+        a = 1
+        b = 0
+
+        for i in range(1,8):
+            
+            endRow = row + a * i
+            endCol = column + b * i
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                    break
+
+                else:
+                    break
+
+            else:
+                break
+        #Left
+        a = 0
+        b = -1
+
+        for i in range(1,8):
+            
+            endRow = row + a * i
+            endCol = column + b * i
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                    break
+
+                else:
+                    break
+
+            else:
+                break
+        #Right
+        a = 0
+        b = 1
+
+        for i in range(1,8):
+            
+            endRow = row + a * i
+            endCol = column + b * i
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                    break
+
+                else:
+                    break
+
+            else:
+                break
         
         
 
