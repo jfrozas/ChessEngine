@@ -36,8 +36,6 @@ class Board:
         self.movelog.append(move)
         self.whiteToMove = not self.whiteToMove
 
-
-
     def getPiece(self, square):
         self.row = square[0]
         self.column = square[1] 
@@ -60,6 +58,18 @@ class Board:
         if piece == "wR" or piece == "bR":
             self.getRookMoves(self.row, self.column, moves)
 
+        if piece == "wB" or piece == "bB":
+            self.getBishopMoves(self.row, self.column, moves)
+        
+        if piece == "wN" or piece == "bN":
+            self.getKnightMoves(self.row, self.column, moves)
+            
+        if piece == "wQ" or piece == "bQ":
+            self.getQueenMoves(self.row, self.column, moves)
+            
+        if piece == "wK" or piece == "bK":
+            self.getKingMoves(self.row, self.column, moves)      
+                  
         return moves
         #print(self.boardcoord[self.row][self.column][0] + self.boardcoord[self.row][self.column][1]) 
 
@@ -93,8 +103,6 @@ class Board:
                 if self.boardcoord[row+1][column+1][0] == "w":                              
                     moves.append( mover( (row, column), (row+1, column+1), self.boardcoord) )       #Captures right
     
-
-
 
     def getRookMoves(self, row, column, moves):
         
@@ -201,7 +209,123 @@ class Board:
                 break
         
         
+    def getBishopMoves(self, row, column, moves):
+        if self.whiteToMove == True:
+            enemycolor = "b"
+        else:
+            enemycolor = "w"
 
+        
+        a = 1
+        b = 1
 
+        for i in range(1,8):
 
+            endRow = row + a * i
+            endCol = column + b * i
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                    break
+
+                else:
+                    break
+
+            else:
+                break
+        #Down
+        a = -1
+        b = -1
+
+        for i in range(1,8):
+            
+            endRow = row + a * i
+            endCol = column + b * i
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                    break
+
+                else:
+                    break
+
+            else:
+                break
+        #Left
+        a = 1
+        b = -1
+
+        for i in range(1,8):
+            
+            endRow = row + a * i
+            endCol = column + b * i
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                    break
+
+                else:
+                    break
+
+            else:
+                break
+        #Right
+        a = -1
+        b = 1
+
+        for i in range(1,8):
+            
+            endRow = row + a * i
+            endCol = column + b * i
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                    break
+
+                else:
+                    break
+
+            else:
+                break
+    
+    
+    def getQueenMoves(self, row, column, moves):
+        self.getBishopMoves(row, column, moves)
+        self.getRookMoves(row, column, moves)
+        
+        
+    def getKnightMoves(self, row, column, moves):
+        #Two forward, one left, one right, two backwards, one left one right, two left, one up one down, two right, one up one down
+        pass    
+    
+    def getKingMoves(self, row, column, moves):
+        #One in each possible direction
+        pass
+    
+
+        
 
