@@ -21,8 +21,9 @@ class Board:
         
         self.bishopList = [(1,1), (-1,-1), (1,-1), (-1,1)]
         self.rookList = [(1,0), (-1,0), (0,-1), (0,1)]
-        self.KnightList = []
-        self.KingList = []
+        self.KnightList = [(2,1),(-2,1),(2,-1),(-2,-1),(1,2),(-1,2),(1,-2),(-1,-2),]
+        self.KingList = [(1,1),(-1,-1),(1,-1),(-1,1),(1,0),(-1,0),(0,-1),(0,1)]
+        
     def show_board(self, surface):
         colors = [(255,250,250), (43,45,47)]
         for row in range(ROWS):
@@ -62,20 +63,20 @@ class Board:
         if piece == "wp" or piece == "bp":
             self.getPawnMoves(self.row, self.column, moves)
 
-        if piece == "wR" or piece == "bR":
+        elif piece == "wR" or piece == "bR":
             self.getRookMoves(self.row, self.column, moves)
 
-        if piece == "wB" or piece == "bB":
+        elif piece == "wB" or piece == "bB":
             self.getBishopMoves(self.row, self.column, moves)
         
-        if piece == "wN" or piece == "bN":
-            self.getKnightMoves(self.row, self.column, moves)
+        elif piece == "wN" or piece == "bN":
+            self.getKnightMoves(self.row, self.column, moves, self.KnightList)
             
-        if piece == "wQ" or piece == "bQ":
+        elif piece == "wQ" or piece == "bQ":
             self.getQueenMoves(self.row, self.column, moves)
             
-        if piece == "wK" or piece == "bK":
-            self.getKingMoves(self.row, self.column, moves)      
+        elif piece == "wK" or piece == "bK":
+            self.getKingMoves(self.row, self.column, moves, self.KingList)      
                   
         return moves
         #print(self.boardcoord[self.row][self.column][0] + self.boardcoord[self.row][self.column][1]) 
@@ -160,13 +161,57 @@ class Board:
         self.getRookMoves(row, column, moves)
         
         
-    def getKnightMoves(self, row, column, moves):
-        # * Two forward, one left, one right, two backwards, one left one right, two left, one up one down, two right, one up one down
-        pass    
-    
-    def getKingMoves(self, row, column, moves):
-        # * One in each possible direction
-        pass
+    def getKnightMoves(self, row, column, moves, list):
+       
+       
+        if self.whiteToMove == True:
+            enemycolor = "b"
+        else:
+            enemycolor = "w"
+            
+            
+        for direction in list:
+            
+            a = direction[0]
+            b = direction[1]
+
+            endRow = row + a 
+            endCol = column + b 
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+     
+               
+    def getKingMoves(self, row, column, moves, list):
+        
+        if self.whiteToMove == True:
+            enemycolor = "b"
+        else:
+            enemycolor = "w"
+            
+            
+        for direction in list:
+            
+            a = direction[0]
+            b = direction[1]
+
+            endRow = row + a 
+            endCol = column + b 
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
     
 
         
