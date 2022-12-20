@@ -17,7 +17,7 @@ class Main():
         self.screen = p.display.set_mode( (WIDTH, HEIGHT) )
         self.board = Board()
         loadPieces()
-
+        self.turn = 0
 
     def mainLoop(self):
         print(np.matrix(self.board.boardcoord))
@@ -28,6 +28,7 @@ class Main():
         auxMover = []      #Store player clicks, max = 2  [ (x,y) , (x,y) ]
         validMoves = []
         clock = p.time.Clock()
+        
 
         while True:
             for event in p.event.get():
@@ -72,8 +73,10 @@ class Main():
                         move = mover(auxMover[0], auxMover[1], self.board.boardcoord)
 
                         if move in validMoves:
-                            self.board.makeMove(move)
-                        
+                            if self.board.whiteToMove == True:
+                                self.turn += 1
+                            self.board.makeMove(move, self.turn)
+
 
                         if move.blankselected != True:
                             print(move.MoveNotation())
@@ -83,6 +86,9 @@ class Main():
                         auxMover = []
 
                         print(np.matrix(self.board.boardcoord))
+                        
+                        for move in self.board.movelog:
+                            print(move.MoveNotation())
 
                         if self.board.whiteToMove == True:
                             print("White to move")

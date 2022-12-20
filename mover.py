@@ -19,7 +19,8 @@ class mover():
         self.squareToGo = board[self.endRow][self.endColumn]
 
         self.id = self.startRow*1000 + self.startColumn*100 + self.endRow*10 + self.endColumn
-
+        self.turn = 0
+        
         self.blankselected = False
         
     def __eq__(self, other):
@@ -28,7 +29,7 @@ class mover():
         return False
 
     def MoveNotation(self):
-        return self.getSquare(self.startRow, self.startColumn) + self.getSquare(self.endRow, self.endColumn)
+        return str(self.turn) + ": " + self.getSquare(self.startRow, self.startColumn) + self.getSquare(self.endRow, self.endColumn)
 
     def getSquare(self, row, column):
         return self.colsToFiles[column] + self.rowsToRanks[row]

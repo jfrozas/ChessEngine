@@ -29,10 +29,13 @@ class Board:
 
                 p.draw.rect(surface, color, rect)
 
-    def makeMove(self, move):
+    def makeMove(self, move, turn):
 
         self.boardcoord[move.startRow][move.startColumn] = "__"
         self.boardcoord[move.endRow][move.endColumn] = move.pieceToMove
+
+        move.turn = turn
+            
         self.movelog.append(move)
         self.whiteToMove = not self.whiteToMove
 
@@ -72,7 +75,6 @@ class Board:
                   
         return moves
         #print(self.boardcoord[self.row][self.column][0] + self.boardcoord[self.row][self.column][1]) 
-
 
 
     def getPawnMoves(self, row, column, moves):
@@ -319,11 +321,11 @@ class Board:
         
         
     def getKnightMoves(self, row, column, moves):
-        #Two forward, one left, one right, two backwards, one left one right, two left, one up one down, two right, one up one down
+        # * Two forward, one left, one right, two backwards, one left one right, two left, one up one down, two right, one up one down
         pass    
     
     def getKingMoves(self, row, column, moves):
-        #One in each possible direction
+        # * One in each possible direction
         pass
     
 
