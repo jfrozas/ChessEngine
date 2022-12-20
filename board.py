@@ -24,6 +24,9 @@ class Board:
         self.KnightList = [(2,1),(-2,1),(2,-1),(-2,-1),(1,2),(-1,2),(1,-2),(-1,-2),]
         self.KingList = [(1,1),(-1,-1),(1,-1),(-1,1),(1,0),(-1,0),(0,-1),(0,1)]
         
+        self.WhiteKingLoc = (7,4)
+        self.BlackKingLoc = (0,4)
+        
     def show_board(self, surface):
         colors = [(255,250,250), (43,45,47)]
         for row in range(ROWS):
@@ -40,6 +43,15 @@ class Board:
         self.boardcoord[move.endRow][move.endColumn] = move.pieceToMove
 
         move.turn = turn
+        
+        if move.pieceToMove == "wK":
+
+            self.WhiteKingLoc = (move.endRow, move.endColumn)
+
+        
+        if move.pieceToMove == "bK":
+            self.BlackKingLoc = (move.endRow, move.endColumn)
+
             
         self.movelog.append(move)
         self.whiteToMove = not self.whiteToMove
@@ -50,7 +62,40 @@ class Board:
 
         return self.boardcoord[self.row][self.column][0] + self.boardcoord[self.row][self.column][1]
 
+    def getAllOponentsMoves(self):
+        
+        moves = []
+        
+        if self.whiteToMove == True:
+            letter = "b"
+        else: 
+            letter = "w"
+            
+        for row in range(len(self.boardcoord)):
+            for column in range(len(self.boardcoord[row])):
+                
+                piece = self.boardcoord[row][column]  
+                
+                if piece == letter + "p":
+                    self.getPawnMoves(self.row, self.column, moves)
 
+                elif piece == letter + "R":
+                    self.getRookMoves(self.row, self.column, moves)
+
+                elif piece == letter + "B":
+                    self.getBishopMoves(self.row, self.column, moves)
+                
+                elif piece == letter + "N":
+                    self.getKnightMoves(self.row, self.column, moves, self.KnightList)
+                    
+                elif piece == letter + "Q":
+                    self.getQueenMoves(self.row, self.column, moves)
+                    
+                elif piece == letter + "K":
+                    self.getKingMoves(self.row, self.column, moves, self.KingList)   
+                    
+        return moves 
+                  
     def getPossibleMoves(self, square):
         
         moves = []
@@ -59,27 +104,30 @@ class Board:
         self.column = square[1]
         piece = self.boardcoord[self.row][self.column][0] + self.boardcoord[self.row][self.column][1]
 
-
-        if piece == "wp" or piece == "bp":
+        if self.whiteToMove == True:
+            letter = "w"
+        else: 
+            letter = "b"
+            
+        if piece == letter + "p":
             self.getPawnMoves(self.row, self.column, moves)
 
-        elif piece == "wR" or piece == "bR":
+        elif piece == letter + "R":
             self.getRookMoves(self.row, self.column, moves)
 
-        elif piece == "wB" or piece == "bB":
+        elif piece == letter + "B":
             self.getBishopMoves(self.row, self.column, moves)
         
-        elif piece == "wN" or piece == "bN":
+        elif piece == letter + "N":
             self.getKnightMoves(self.row, self.column, moves, self.KnightList)
             
-        elif piece == "wQ" or piece == "bQ":
+        elif piece == letter + "Q":
             self.getQueenMoves(self.row, self.column, moves)
             
-        elif piece == "wK" or piece == "bK":
+        elif piece == letter + "K":
             self.getKingMoves(self.row, self.column, moves, self.KingList)      
                   
         return moves
-        #print(self.boardcoord[self.row][self.column][0] + self.boardcoord[self.row][self.column][1]) 
 
 
     def getPawnMoves(self, row, column, moves):
@@ -109,6 +157,7 @@ class Board:
             if column+1 <= 7:
                 if self.boardcoord[row+1][column+1][0] == "w":                              
                     moves.append( mover( (row, column), (row+1, column+1), self.boardcoord) )       #Captures right
+    
     
     def Iterator(self, row, column, moves, list):
         

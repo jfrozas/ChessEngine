@@ -83,7 +83,6 @@ class Main():
                                 self.turn += 1
                             self.board.makeMove(move, self.turn)
 
-
                         if move.blankselected != True:
                             print(move.MoveNotation())
 
