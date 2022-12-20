@@ -9,6 +9,7 @@ from mover import *
 
 IMAGES = {}
 MAX_FPS = 15
+index = 0
 
 
 class Main():
@@ -35,6 +36,11 @@ class Main():
                 if event.type == p.QUIT:
                     p.quit()
                     sys.exit()
+                    
+                elif event.type == p.KEYDOWN:
+                    if event.key == ord ( "a" ):
+                        print("a")
+                
                 elif event.type == p.MOUSEBUTTONDOWN:
 
                     loc = p.mouse.get_pos()  #(x,y)

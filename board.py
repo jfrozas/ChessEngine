@@ -18,7 +18,11 @@ class Board:
         ]
         self.whiteToMove = True
         self.movelog = []
-
+        
+        self.bishopList = [(1,1), (-1,-1), (1,-1), (-1,1)]
+        self.rookList = [(1,0), (-1,0), (0,-1), (0,1)]
+        self.KnightList = []
+        self.KingList = []
     def show_board(self, surface):
         colors = [(255,250,250), (43,45,47)]
         for row in range(ROWS):
@@ -105,214 +109,50 @@ class Board:
                 if self.boardcoord[row+1][column+1][0] == "w":                              
                     moves.append( mover( (row, column), (row+1, column+1), self.boardcoord) )       #Captures right
     
+    def Iterator(self, row, column, moves, list):
+        
+        if self.whiteToMove == True:
+            enemycolor = "b"
+        else:
+            enemycolor = "w"
+            
+            
+        for direction in list:
+            
+            a = direction[0]
+            b = direction[1]
 
+            
+            for i in range(1,8):
+
+                endRow = row + a * i
+                endCol = column + b * i
+
+                if 0 <= endRow < 8 and 0 <= endCol < 8:
+                    piece = self.boardcoord[endRow][endCol]
+
+                    if piece == "__":
+                        moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                    elif piece[0] == enemycolor:
+                        moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                        break
+
+                    else:
+                        break
+
+                else:
+                    break            
+            
+    
     def getRookMoves(self, row, column, moves):
         
-        if self.whiteToMove == True:
-            enemycolor = "b"
-        else:
-            enemycolor = "w"
-
-        #Up
-        a = -1
-        b = 0
-
-        for i in range(1,8):
-
-            endRow = row + a * i
-            endCol = column + b * i
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-                    break
-
-                else:
-                    break
-
-            else:
-                break
-        #Down
-        a = 1
-        b = 0
-
-        for i in range(1,8):
-            
-            endRow = row + a * i
-            endCol = column + b * i
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-                    break
-
-                else:
-                    break
-
-            else:
-                break
-        #Left
-        a = 0
-        b = -1
-
-        for i in range(1,8):
-            
-            endRow = row + a * i
-            endCol = column + b * i
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-                    break
-
-                else:
-                    break
-
-            else:
-                break
-        #Right
-        a = 0
-        b = 1
-
-        for i in range(1,8):
-            
-            endRow = row + a * i
-            endCol = column + b * i
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-                    break
-
-                else:
-                    break
-
-            else:
-                break
+        self.Iterator(row, column, moves, self.rookList)
         
-        
+           
     def getBishopMoves(self, row, column, moves):
-        if self.whiteToMove == True:
-            enemycolor = "b"
-        else:
-            enemycolor = "w"
-
         
-        a = 1
-        b = 1
-
-        for i in range(1,8):
-
-            endRow = row + a * i
-            endCol = column + b * i
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-                    break
-
-                else:
-                    break
-
-            else:
-                break
-        #Down
-        a = -1
-        b = -1
-
-        for i in range(1,8):
-            
-            endRow = row + a * i
-            endCol = column + b * i
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-                    break
-
-                else:
-                    break
-
-            else:
-                break
-        #Left
-        a = 1
-        b = -1
-
-        for i in range(1,8):
-            
-            endRow = row + a * i
-            endCol = column + b * i
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-                    break
-
-                else:
-                    break
-
-            else:
-                break
-        #Right
-        a = -1
-        b = 1
-
-        for i in range(1,8):
-            
-            endRow = row + a * i
-            endCol = column + b * i
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-                    break
-
-                else:
-                    break
-
-            else:
-                break
+        self.Iterator(row, column, moves, self.bishopList)
     
     
     def getQueenMoves(self, row, column, moves):
