@@ -193,7 +193,33 @@ class Board:
 
                 else:
                     break            
+                    
+                    
+    def Iterator2(self, row, column, moves, list):
+        
+        if self.whiteToMove == True:
+            enemycolor = "b"
+        else:
+            enemycolor = "w"
             
+            
+        for direction in list:
+            
+            a = direction[0]
+            b = direction[1]
+
+            endRow = row + a 
+            endCol = column + b 
+
+            if 0 <= endRow < 8 and 0 <= endCol < 8:
+                piece = self.boardcoord[endRow][endCol]
+
+                if piece == "__":
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+
+                elif piece[0] == enemycolor:
+                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+                            
     
     def getRookMoves(self, row, column, moves):
         
@@ -211,56 +237,14 @@ class Board:
         
         
     def getKnightMoves(self, row, column, moves, list):
+       self.Iterator2(row, column, moves, list)
        
-       
-        if self.whiteToMove == True:
-            enemycolor = "b"
-        else:
-            enemycolor = "w"
-            
-            
-        for direction in list:
-            
-            a = direction[0]
-            b = direction[1]
 
-            endRow = row + a 
-            endCol = column + b 
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
      
                
     def getKingMoves(self, row, column, moves, list):
         
-        if self.whiteToMove == True:
-            enemycolor = "b"
-        else:
-            enemycolor = "w"
-            
-            
-        for direction in list:
-            
-            a = direction[0]
-            b = direction[1]
-
-            endRow = row + a 
-            endCol = column + b 
-
-            if 0 <= endRow < 8 and 0 <= endCol < 8:
-                piece = self.boardcoord[endRow][endCol]
-
-                if piece == "__":
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
-
-                elif piece[0] == enemycolor:
-                    moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
+        self.Iterator2(row, column, moves, list)
     
 
         
