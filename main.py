@@ -7,6 +7,7 @@ from board import *
 from mover import *
 
 
+
 IMAGES = {}
 MAX_FPS = 15
 index = 0
@@ -15,6 +16,7 @@ index = 0
 class Main():
     def __init__(self):
         p.init()
+        p.display.set_caption('Chess game')
         self.screen = p.display.set_mode( (WIDTH, HEIGHT) )
         self.board = Board()
         loadPieces()
@@ -38,8 +40,9 @@ class Main():
                     sys.exit()
                     
                 elif event.type == p.KEYDOWN:
-                    if event.key == ord ( "a" ):
-                        print("a")
+                    if event.key == ord ( "m" ): 
+                        p.quit()
+                        menu()
                 
                 elif event.type == p.MOUSEBUTTONDOWN:
 
@@ -124,6 +127,7 @@ def drawPieces(screen, board):
                 screen.blit(IMAGES[piece], rect)
                 #screen.blit(IMAGES[piece], p.Rect(column*SQUARESIZE,row*SQUARESIZE,SQUARESIZE,SQUARESIZE))
 
+
 def highlighter(screen, sqSelected,validMoves):
     if sqSelected != ():
         row, column = sqSelected
@@ -136,5 +140,26 @@ def highlighter(screen, sqSelected,validMoves):
         for move in validMoves:
             screen.blit(s, (move.endColumn * SQUARESIZE, move.endRow*SQUARESIZE))
 
-main = Main()
-main.mainLoop()
+
+# !MENU
+
+def menu():
+    while True:
+        p.init()
+        p.display.set_caption('Main Menu')
+        screen = p.display.set_mode( (WIDTH, HEIGHT) )
+        screen.fill(black)
+
+        for event in p.event.get():
+            if event.type == p.QUIT:
+                p.quit()
+                sys.exit()
+            elif event.type == p.KEYDOWN:
+                if event.key == ord ( "p" ):
+                    main = Main()
+                    main.mainLoop()
+
+
+
+menu()
+

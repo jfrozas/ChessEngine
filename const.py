@@ -3,3 +3,5 @@ WIDTH = HEIGHT = 800
 ROWS = COLUMNS = 8
 
 SQUARESIZE = WIDTH // COLUMNS
+
+black = [0, 0, 0]
