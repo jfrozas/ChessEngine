@@ -144,11 +144,15 @@ def highlighter(screen, sqSelected,validMoves):
 # !MENU
 
 def menu():
+    p.init()
+    p.display.set_caption('Main Menu')
+    screen = p.display.set_mode( (WIDTH, HEIGHT) )
+    button = p.Rect(100,200,600,150)
+    button2 = p.Rect(100,500,600,150)
+
     while True:
-        p.init()
-        p.display.set_caption('Main Menu')
-        screen = p.display.set_mode( (WIDTH, HEIGHT) )
-        screen.fill(black)
+
+        screen.fill(gray)
 
         for event in p.event.get():
             if event.type == p.QUIT:
@@ -158,7 +162,9 @@ def menu():
                 if event.key == ord ( "p" ):
                     main = Main()
                     main.mainLoop()
-
+        p.draw.rect(screen, green, button, 0)
+        p.draw.rect(screen, green2, button2, 0)
+        p.display.flip()
 
 
 menu()
