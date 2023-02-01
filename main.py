@@ -75,10 +75,30 @@ class Main():
                         print("Moving: " + self.board.getPiece(sqSelected))
                         validMoves = self.board.getPossibleMoves(sqSelected)     #Consigue todos los posibles movimientos
 
+                        print("-----------------------------------Possible Own Moves-----------------------------")
                         for move in validMoves:
                             print("Possible moves: " + move.MoveNotation())
+                        print("-----------------------------------Possible Own Moves-----------------------------")
+
+                        print("########################################################################################")
+
+                        OpMoves = self.board.getAllOponentsMoves()
+
+                        print("-----------------------------------Possible Opponents Moves-----------------------------")
+
+                        for move in OpMoves:
+                            ## Para comprobar la validez de movimientos: genero los posibles, los hago, compruebo que sus piezas no ataquen a mi rey, si eso se cumple, es valido
+                            ## !TODO probablemente una funcion de undo o algo para guardar los movimientos anteriores (para poder realizarlos e ir atras)
+                            # ! 
+
+                            print(move.MoveNotationNoTurn())
+
+                        print("-----------------------------------Possible Opponents Moves-----------------------------")
 
                     if len(auxMover) == 2:   #Two valid clicks -> move
+
+
+
                         move = mover(auxMover[0], auxMover[1], self.board.boardcoord)
 
                         if move in validMoves:
@@ -86,15 +106,12 @@ class Main():
                                 self.turn += 1
                             self.board.makeMove(move, self.turn)
 
-                        if move.blankselected != True:
-                            print(move.MoveNotation())
-
-
                         sqSelected = ()
                         auxMover = []
 
                         print(np.matrix(self.board.boardcoord))
                         
+                        print("-------------Planilla-------------")
                         for move in self.board.movelog:
                             print(move.MoveNotation())
 
@@ -141,6 +158,9 @@ def highlighter(screen, sqSelected,validMoves):
             screen.blit(s, (move.endColumn * SQUARESIZE, move.endRow*SQUARESIZE))
 
 
+
+
+
 # !MENU
 
 def menu():
@@ -162,6 +182,7 @@ def menu():
                 if event.key == ord ( "p" ):
                     main = Main()
                     main.mainLoop()
+                    
         p.draw.rect(screen, green, button, 0)
         p.draw.rect(screen, green2, button2, 0)
         p.display.flip()
