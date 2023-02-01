@@ -28,8 +28,18 @@ class mover():
             return self.id == other.id
         return False
 
+    def MoveNotationNoTurn(self):
+        if self.pieceToMove == "wp" or self.pieceToMove == "bp":
+            return self.getSquare(self.startRow, self.startColumn) + self.getSquare(self.endRow, self.endColumn)
+        else:
+            return self.pieceToMove[1] + self.getSquare(self.startRow, self.startColumn) + self.getSquare(self.endRow, self.endColumn)
+
     def MoveNotation(self):
-        return str(self.turn) + ": " + self.getSquare(self.startRow, self.startColumn) + self.getSquare(self.endRow, self.endColumn)
+        if self.pieceToMove == "wp" or self.pieceToMove == "bp":
+            return str(self.turn) + ": " + self.getSquare(self.startRow, self.startColumn) + self.getSquare(self.endRow, self.endColumn)
+        else:
+            return str(self.turn) + ": " + self.pieceToMove[1] + self.getSquare(self.startRow, self.startColumn) + self.getSquare(self.endRow, self.endColumn)
+        
 
     def getSquare(self, row, column):
         return self.colsToFiles[column] + self.rowsToRanks[row]
