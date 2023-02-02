@@ -79,6 +79,8 @@ class Main():
                             print("Possible moves: " + move.MoveNotation())
 
                     if len(auxMover) == 2:   #Two valid clicks -> move
+                        
+                        
                         move = mover(auxMover[0], auxMover[1], self.board.boardcoord)
 
                         if move in validMoves:
