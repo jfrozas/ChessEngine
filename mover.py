@@ -10,6 +10,7 @@ class mover():
     
 
     def __init__(self, startSquare, endSquare, board):
+        
         self.startRow = startSquare[0]
         self.startColumn = startSquare[1]
         self.endRow = endSquare[0]
