@@ -56,6 +56,17 @@ class Board:
         self.movelog.append(move)
         self.whiteToMove = not self.whiteToMove
 
+    def undoMove(self, turn):
+        
+        # ! Acceder al movelog, sacar el movimiento, poner las casillas de ese move como end y beggining, movemos la pieza, cambiamos turno
+        move = self.movelog[-1]
+        
+        self.boardcoord[move.startRow][move.startColumn] = move.pieceToMove
+        self.boardcoord[move.endRow][move.endColumn] = "__"
+        
+        
+        pass
+        
     def getPiece(self, square):
         self.row = square[0]
         self.column = square[1] 
@@ -75,7 +86,7 @@ class Board:
             for column in range(len(self.boardcoord[row])):
                 
                 piece = self.boardcoord[row][column]  
-                print("Pieza = " + piece + " Letra: " + letter)
+                #print("Pieza = " + piece + " Letra: " + letter)
                 
                 if piece == letter + "p":
                     self.getPawnMoves(row, column, moves, not self.whiteToMove)
@@ -240,8 +251,6 @@ class Board:
     def getKnightMoves(self, row, column, moves, list, turn):
        self.Iterator2(row, column, moves, list, turn)
        
-
-     
                
     def getKingMoves(self, row, column, moves, list, turn):
         
