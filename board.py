@@ -75,24 +75,25 @@ class Board:
             for column in range(len(self.boardcoord[row])):
                 
                 piece = self.boardcoord[row][column]  
+                print("Pieza = " + piece + " Letra: " + letter)
                 
                 if piece == letter + "p":
-                    self.getPawnMoves(self.row, self.column, moves)
+                    self.getPawnMoves(row, column, moves, not self.whiteToMove)
 
                 elif piece == letter + "R":
-                    self.getRookMoves(self.row, self.column, moves)
+                    self.getRookMoves(row, column, moves, not self.whiteToMove)
 
                 elif piece == letter + "B":
-                    self.getBishopMoves(self.row, self.column, moves)
+                    self.getBishopMoves(row, column, moves, not self.whiteToMove)
                 
                 elif piece == letter + "N":
-                    self.getKnightMoves(self.row, self.column, moves, self.KnightList)
+                    self.getKnightMoves(row, column, moves, self.KnightList, not self.whiteToMove)
                     
                 elif piece == letter + "Q":
-                    self.getQueenMoves(self.row, self.column, moves)
+                    self.getQueenMoves(row, column, moves, not self.whiteToMove)
                     
                 elif piece == letter + "K":
-                    self.getKingMoves(self.row, self.column, moves, self.KingList)   
+                    self.getKingMoves(row, column, moves, self.KingList, not self.whiteToMove)   
                     
         return moves 
                   
@@ -110,29 +111,29 @@ class Board:
             letter = "b"
             
         if piece == letter + "p":
-            self.getPawnMoves(self.row, self.column, moves)
+            self.getPawnMoves(self.row, self.column, moves, self.whiteToMove)
 
         elif piece == letter + "R":
-            self.getRookMoves(self.row, self.column, moves)
+            self.getRookMoves(self.row, self.column, moves, self.whiteToMove)
 
         elif piece == letter + "B":
-            self.getBishopMoves(self.row, self.column, moves)
+            self.getBishopMoves(self.row, self.column, moves, self.whiteToMove)
         
         elif piece == letter + "N":
-            self.getKnightMoves(self.row, self.column, moves, self.KnightList)
+            self.getKnightMoves(self.row, self.column, moves, self.KnightList, self.whiteToMove)
             
         elif piece == letter + "Q":
-            self.getQueenMoves(self.row, self.column, moves)
+            self.getQueenMoves(self.row, self.column, moves, self.whiteToMove)
             
         elif piece == letter + "K":
-            self.getKingMoves(self.row, self.column, moves, self.KingList)      
+            self.getKingMoves(self.row, self.column, moves, self.KingList, self.whiteToMove)      
                   
         return moves
 
 
-    def getPawnMoves(self, row, column, moves):
+    def getPawnMoves(self, row, column, moves, turn):
 
-        if self.whiteToMove:                                                                         #White
+        if turn:                                                                         #White
             if self.boardcoord[row-1][column] == "__":
                 moves.append( mover( (row, column), (row-1, column), self.boardcoord) )             #Move 1
                 if row == 6 and self.boardcoord[row-2][column] == "__":
@@ -159,9 +160,9 @@ class Board:
                     moves.append( mover( (row, column), (row+1, column+1), self.boardcoord) )       #Captures right
     
     
-    def Iterator(self, row, column, moves, list):
+    def Iterator(self, row, column, moves, list, turn):
         
-        if self.whiteToMove == True:
+        if turn == True:
             enemycolor = "b"
         else:
             enemycolor = "w"
@@ -195,9 +196,9 @@ class Board:
                     break            
                     
                     
-    def Iterator2(self, row, column, moves, list):
+    def Iterator2(self, row, column, moves, list, turn):
         
-        if self.whiteToMove == True:
+        if turn == True:
             enemycolor = "b"
         else:
             enemycolor = "w"
@@ -221,30 +222,30 @@ class Board:
                     moves.append( mover( (row, column), (endRow, endCol), self.boardcoord) )
                             
     
-    def getRookMoves(self, row, column, moves):
+    def getRookMoves(self, row, column, moves, turn):
         
-        self.Iterator(row, column, moves, self.rookList)
+        self.Iterator(row, column, moves, self.rookList, turn)
         
            
-    def getBishopMoves(self, row, column, moves):
+    def getBishopMoves(self, row, column, moves, turn):
         
-        self.Iterator(row, column, moves, self.bishopList)
+        self.Iterator(row, column, moves, self.bishopList, turn)
     
     
-    def getQueenMoves(self, row, column, moves):
-        self.getBishopMoves(row, column, moves)
-        self.getRookMoves(row, column, moves)
+    def getQueenMoves(self, row, column, moves, turn):
+        self.getBishopMoves(row, column, moves, turn)
+        self.getRookMoves(row, column, moves, turn)
         
         
-    def getKnightMoves(self, row, column, moves, list):
-       self.Iterator2(row, column, moves, list)
+    def getKnightMoves(self, row, column, moves, list, turn):
+       self.Iterator2(row, column, moves, list, turn)
        
 
      
                
-    def getKingMoves(self, row, column, moves, list):
+    def getKingMoves(self, row, column, moves, list, turn):
         
-        self.Iterator2(row, column, moves, list)
+        self.Iterator2(row, column, moves, list, turn)
     
 
         
