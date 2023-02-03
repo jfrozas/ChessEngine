@@ -43,7 +43,7 @@ class Main():
                     if event.key == ord ( "m" ): 
                         p.quit()
                         menu()
-                
+                        
                 elif event.type == p.MOUSEBUTTONDOWN:
 
                     loc = p.mouse.get_pos()  #(x,y)

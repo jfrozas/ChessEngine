@@ -63,9 +63,24 @@ class Board:
         
         self.boardcoord[move.startRow][move.startColumn] = move.pieceToMove
         self.boardcoord[move.endRow][move.endColumn] = "__"
+        print("a")
+        print(move)
         
+        if self.whiteToMove == True:
+            move.turn = turn -1
+        else:
+            move.turn = turn
         
-        pass
+        if move.pieceToMove == "wK":
+
+            self.WhiteKingLoc = (move.startRow, move.startColumn)
+
+        
+        if move.pieceToMove == "bK":
+            self.BlackKingLoc = (move.startRow, move.startColumn)       
+        
+        self.movelog.pop()
+        self.whiteToMove = not self.whiteToMove
         
     def getPiece(self, square):
         self.row = square[0]
